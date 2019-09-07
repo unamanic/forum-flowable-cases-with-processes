@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:flowable="http://flowable.org/cmmn" xmlns:cmmndi="http://www.omg.org/spec/CMMN/20151109/CMMNDI" xmlns:dc="http://www.omg.org/spec/CMMN/20151109/DC" xmlns:di="http://www.omg.org/spec/CMMN/20151109/DI" xmlns:design="http://flowable.org/design" targetNamespace="http://flowable.org/cmmn">
+  <case id="triggerMultipleServicesCase" name="Trigger Multiple Services Case" flowable:initiatorVariableName="initiator" flowable:candidateStarterGroups="flowableUser">
+    <casePlanModel id="onecaseplanmodel1" name="Case plan model" flowable:formFieldValidation="false" flowable:includeInStageOverview="false">
+      <extensionElements>
+        <flowable:work-form-field-validation><![CDATA[false]]></flowable:work-form-field-validation>
+        <design:stencilid><![CDATA[CasePlanModel]]></design:stencilid>
+      </extensionElements>
+      <planItem id="planItem4" definitionRef="expandedStage1">
+        <itemControl>
+          <repetitionRule flowable:counterVariable="repetitionCounter"></repetitionRule>
+        </itemControl>
+        <entryCriterion id="entryCriterion1" sentryRef="sentry2"></entryCriterion>
+      </planItem>
+      <planItem id="planItem5" name="Set Reps" definitionRef="scriptTask2"></planItem>
+      <planItem id="planItem7" definitionRef="expandedStage2">
+        <entryCriterion id="entryCriterion2" sentryRef="sentry1"></entryCriterion>
+      </planItem>
+      <sentry id="sentry2">
+        <extensionElements>
+          <design:stencilid xmlns:design="http://flowable.org/design"><![CDATA[EntryCriterion]]></design:stencilid>
+        </extensionElements>
+        <ifPart>
+          <condition><![CDATA[${variables:gt('reps',0)}]]></condition>
+        </ifPart>
+      </sentry>
+      <sentry id="sentry1">
+        <extensionElements>
+          <design:stencilid xmlns:design="http://flowable.org/design"><![CDATA[EntryCriterion]]></design:stencilid>
+        </extensionElements>
+        <ifPart>
+          <condition><![CDATA[${variables:eq('reps',0)}]]></condition>
+        </ifPart>
+      </sentry>
+      <stage id="expandedStage1" flowable:includeInStageOverview="true">
+        <extensionElements>
+          <flowable:start-form-field-validation><![CDATA[false]]></flowable:start-form-field-validation>
+          <design:stencilid><![CDATA[ExpandedStage]]></design:stencilid>
+        </extensionElements>
+        <planItem id="planItem1" name="Mmm Bop" definitionRef="processTask1"></planItem>
+        <planItem id="planItem2" name="Wannabe" definitionRef="processTask2"></planItem>
+        <planItem id="planItem3" name="Decrement Reps" definitionRef="scriptTask1"></planItem>
+        <processTask id="processTask1" name="Mmm Bop" isBlocking="false" flowable:fallbackToDefaultTenant="true">
+          <extensionElements>
+            <flowable:start-form-field-validation><![CDATA[false]]></flowable:start-form-field-validation>
+            <design:stencilid><![CDATA[ProcessTask]]></design:stencilid>
+            <design:stencilsuperid><![CDATA[Task]]></design:stencilsuperid>
+            <design:name_en_us><![CDATA[Mmm Bop]]></design:name_en_us>
+          </extensionElements>
+          <processRefExpression><![CDATA[mmmBopProcess]]></processRefExpression>
+        </processTask>
+        <processTask id="processTask2" name="Wannabe" isBlocking="false" flowable:fallbackToDefaultTenant="true">
+          <extensionElements>
+            <flowable:start-form-field-validation><![CDATA[false]]></flowable:start-form-field-validation>
+            <design:stencilid><![CDATA[ProcessTask]]></design:stencilid>
+            <design:stencilsuperid><![CDATA[Task]]></design:stencilsuperid>
+            <design:name_en_us><![CDATA[Wannabe]]></design:name_en_us>
+          </extensionElements>
+          <processRefExpression><![CDATA[wannabeProcess]]></processRefExpression>
+        </processTask>
+        <task id="scriptTask1" name="Decrement Reps" flowable:type="script" flowable:scriptFormat="JavaScript">
+          <extensionElements>
+            <flowable:start-form-field-validation><![CDATA[false]]></flowable:start-form-field-validation>
+            <design:stencilid><![CDATA[ScriptTask]]></design:stencilid>
+            <design:stencilsuperid><![CDATA[Task]]></design:stencilsuperid>
+            <design:name_en_us><![CDATA[Decrement Reps]]></design:name_en_us>
+            <design:scriptformat><![CDATA[JavaScript]]></design:scriptformat>
+            <design:script><![CDATA[var reps = planItemInstance.getVariable('reps');
+planItemInstance.setVariable('reps', --reps);]]></design:script>
+            <flowable:field name="script">
+              <flowable:string><![CDATA[var reps = planItemInstance.getVariable('reps');
+planItemInstance.setVariable('reps', --reps);]]></flowable:string>
+            </flowable:field>
+          </extensionElements>
+        </task>
+      </stage>
+      <task id="scriptTask2" name="Set Reps" flowable:type="script" flowable:scriptFormat="JavaScript">
+        <extensionElements>
+          <flowable:start-form-field-validation><![CDATA[false]]></flowable:start-form-field-validation>
+          <design:stencilid><![CDATA[ScriptTask]]></design:stencilid>
+          <design:stencilsuperid><![CDATA[Task]]></design:stencilsuperid>
+          <design:name_en_us><![CDATA[Set Reps]]></design:name_en_us>
+          <design:scriptformat><![CDATA[JavaScript]]></design:scriptformat>
+          <design:script><![CDATA[planItemInstance.setVariable('reps', 10);]]></design:script>
+          <flowable:field name="script">
+            <flowable:string><![CDATA[planItemInstance.setVariable('reps', 10);]]></flowable:string>
+          </flowable:field>
+        </extensionElements>
+      </task>
+      <stage id="expandedStage2" flowable:includeInStageOverview="true">
+        <extensionElements>
+          <flowable:start-form-field-validation><![CDATA[false]]></flowable:start-form-field-validation>
+          <design:stencilid><![CDATA[ExpandedStage]]></design:stencilid>
+        </extensionElements>
+        <planItem id="planItem6" name="All Done" definitionRef="serviceTask2"></planItem>
+        <task id="serviceTask2" name="All Done" flowable:type="java" flowable:delegateExpression="${allDoneDelegate}">
+          <extensionElements>
+            <flowable:start-form-field-validation><![CDATA[false]]></flowable:start-form-field-validation>
+            <design:stencilid><![CDATA[ServiceTask]]></design:stencilid>
+            <design:stencilsuperid><![CDATA[Task]]></design:stencilsuperid>
+            <design:name_en_us><![CDATA[All Done]]></design:name_en_us>
+          </extensionElements>
+        </task>
+      </stage>
+    </casePlanModel>
+  </case>
+  <cmmndi:CMMNDI>
+    <cmmndi:CMMNDiagram id="CMMNDiagram_triggerMultipleServicesCase">
+      <cmmndi:CMMNShape id="CMMNShape_onecaseplanmodel1" cmmnElementRef="onecaseplanmodel1">
+        <dc:Bounds height="754.0" width="758.0" x="30.0" y="45.0"></dc:Bounds>
+        <cmmndi:CMMNLabel></cmmndi:CMMNLabel>
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="CMMNShape_planItem4" cmmnElementRef="planItem4">
+        <dc:Bounds height="165.0" width="465.0" x="120.0" y="255.0"></dc:Bounds>
+        <cmmndi:CMMNLabel></cmmndi:CMMNLabel>
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="CMMNShape_entryCriterion1" cmmnElementRef="entryCriterion1">
+        <dc:Bounds height="28.0" width="18.0" x="111.0" y="323.0"></dc:Bounds>
+        <cmmndi:CMMNLabel></cmmndi:CMMNLabel>
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="CMMNShape_planItem1" cmmnElementRef="planItem1">
+        <dc:Bounds height="80.0" width="100.0" x="166.0" y="300.0"></dc:Bounds>
+        <cmmndi:CMMNLabel></cmmndi:CMMNLabel>
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="CMMNShape_planItem2" cmmnElementRef="planItem2">
+        <dc:Bounds height="80.0" width="100.0" x="301.0" y="300.0"></dc:Bounds>
+        <cmmndi:CMMNLabel></cmmndi:CMMNLabel>
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="CMMNShape_planItem3" cmmnElementRef="planItem3">
+        <dc:Bounds height="80.0" width="100.0" x="436.0" y="297.5"></dc:Bounds>
+        <cmmndi:CMMNLabel></cmmndi:CMMNLabel>
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="CMMNShape_planItem5" cmmnElementRef="planItem5">
+        <dc:Bounds height="80.0" width="100.0" x="136.0" y="106.0"></dc:Bounds>
+        <cmmndi:CMMNLabel></cmmndi:CMMNLabel>
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="CMMNShape_planItem7" cmmnElementRef="planItem7">
+        <dc:Bounds height="164.0" width="464.0" x="121.0" y="481.0"></dc:Bounds>
+        <cmmndi:CMMNLabel></cmmndi:CMMNLabel>
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="CMMNShape_entryCriterion2" cmmnElementRef="entryCriterion2">
+        <dc:Bounds height="28.0" width="18.0" x="112.0" y="549.0"></dc:Bounds>
+        <cmmndi:CMMNLabel></cmmndi:CMMNLabel>
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="CMMNShape_planItem6" cmmnElementRef="planItem6">
+        <dc:Bounds height="80.0" width="100.0" x="301.0" y="526.0"></dc:Bounds>
+        <cmmndi:CMMNLabel></cmmndi:CMMNLabel>
+      </cmmndi:CMMNShape>
+    </cmmndi:CMMNDiagram>
+  </cmmndi:CMMNDI>
+</definitions>
