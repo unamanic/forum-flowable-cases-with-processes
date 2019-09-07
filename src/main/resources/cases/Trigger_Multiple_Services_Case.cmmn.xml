@@ -81,9 +81,9 @@ planItemInstance.setVariable('reps', --reps);]]></flowable:string>
           <design:stencilsuperid><![CDATA[Task]]></design:stencilsuperid>
           <design:name_en_us><![CDATA[Set Reps]]></design:name_en_us>
           <design:scriptformat><![CDATA[JavaScript]]></design:scriptformat>
-          <design:script><![CDATA[planItemInstance.setVariable('reps', 10);]]></design:script>
+          <design:script><![CDATA[planItemInstance.setVariable('reps', 3);]]></design:script>
           <flowable:field name="script">
-            <flowable:string><![CDATA[planItemInstance.setVariable('reps', 10);]]></flowable:string>
+            <flowable:string><![CDATA[planItemInstance.setVariable('reps', 3);]]></flowable:string>
           </flowable:field>
         </extensionElements>
       </task>
